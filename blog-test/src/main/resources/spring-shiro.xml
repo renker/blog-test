@@ -36,14 +36,6 @@
 			</map>
 		</property>
 		<property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource"></property>
-		<!-- <property name="filterChainDefinitions">
-			<value>
-				/statc/**=anon
-				/admin/doLogin=anon
-				/admin/loginOut=logout
-				/admin/**=authc
-			</value>
-		</property> -->
 	</bean>
 	
 	<bean id="chainDefinitionSectionMetaSource" class="com.ct.shiro.ChainDefinitionSectionMetaSource">
@@ -54,7 +46,6 @@
 				/admin/doLogin=anon
 				/admin/unauthorized=anon
 				/admin/loginOut=logout
-				<!-- /admin/**=authc -->
 				/admin/**=role[admin]
 			</value>
 		</property>
