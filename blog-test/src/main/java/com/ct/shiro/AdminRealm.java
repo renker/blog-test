@@ -27,7 +27,7 @@ public class AdminRealm extends AuthorizingRealm{
 	
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection arg0) {
 		SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-		//simpleAuthorizationInfo.addRole("admin");
+		simpleAuthorizationInfo.addRole("admin");
 		return simpleAuthorizationInfo;
 	}
 
