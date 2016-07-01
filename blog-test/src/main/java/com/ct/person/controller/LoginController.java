@@ -1,12 +1,16 @@
 package com.ct.person.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletRequest;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.util.SavedRequest;
+import org.apache.shiro.web.util.WebUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,13 +41,23 @@ public class LoginController {
 	 * @date 2016-4-17 下午5:08:28
 	 */
 	@RequestMapping(value="doLogin",method=RequestMethod.POST)
-	public String doLogin(@RequestParam("username")String username,@RequestParam("password")String password,Boolean rememberMe,Model model){
+	public String doLogin(@RequestParam("username")String username,@RequestParam("password")String password,@RequestParam(value="rememberMe",defaultValue="false")Boolean rememberMe,Model model,ServletRequest request){
 		String errorMsg = null;
 		try {
 			Subject subject = SecurityUtils.getSubject();
 			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
-			token.setRememberMe(true);
+			token.setRememberMe(rememberMe);
 			subject.login(token);
+			
+			String redirectUrl = "/admin/index";
+			
+			// 重定向到之前跳至登陆的页面
+			SavedRequest savedRequest = WebUtils.getSavedRequest(request);
+			if(savedRequest != null && savedRequest.getMethod().equals(RequestMethod.GET.toString())){
+				redirectUrl = savedRequest.getRequestURI()+"?"+savedRequest.getQueryString();
+			}
+			
+			return "redirect:"+redirectUrl;
 		} catch (AuthenticationException e) {
 			if(e instanceof UnknownAccountException){
 				errorMsg = "账号不存在";
@@ -54,8 +68,6 @@ public class LoginController {
 			model.addAttribute("errorMsg", errorMsg);
 			return "redirect:/admin/login";
 		}
-		model.addAttribute("errorMsg", errorMsg);
-		return "redirect:/admin/index";
 	}
 	
 	/**
