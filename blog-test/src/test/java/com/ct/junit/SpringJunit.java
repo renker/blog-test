@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.ct.spring.SpringContextUtil;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations={"classpath:applicationContext.xml"})
+@ContextConfiguration(locations={"classpath:spring.xml"})
 public class SpringJunit {
 	
 	@Resource
