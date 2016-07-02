@@ -39,7 +39,10 @@ public class SpringContextUtil implements ApplicationContextAware{
 							
 							// 替换掉“/”,"\"
 							url = url.replaceAll("/+", ".");
-							System.out.println(url);
+							url = url.replaceAll("(\\{\\w+\\})", "*");
+							
+							String partten = url.replaceAll("\\.", "/");
+							System.out.println(url+"\t"+partten);
 						}
 					}
 				}

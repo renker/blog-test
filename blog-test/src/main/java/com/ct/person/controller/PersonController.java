@@ -17,4 +17,9 @@ public class PersonController {
 	public String index(){
 		return "person/person_index";
 	}
+	
+	@RequestMapping("test/{path}/{id}")
+	public String test(){
+		return "";
+	}
 }
