@@ -1,6 +1,6 @@
 package com.ct.em;
 
-public enum Status {
+public enum Status{
 	SUCCESS("success"),ERROR("error"),WARN("warn");
 	
 	private String value;
